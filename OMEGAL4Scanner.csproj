@@ -12,6 +12,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="SharpPcap" Version="6.3.0" />
     <PackageReference Include="System.CommandLine" Version="2.0.0-beta4.22272.1" />
     <EmbeddedResource Remove="Resources\*.resx" />
     <None Remove="cs\**\*;de\**\*;es\**\*;fr\**\*;it\**\*;ja\**\*;ko\**\*;pl\**\*;pt-BR\**\*;ru\**\*;tr\**\*;zh-Hans\**\*;zh-Hant\**\*;" />
