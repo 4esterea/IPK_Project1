@@ -114,19 +114,14 @@ namespace IPKScanner
 
                 return "open"; // No matching ICMP response = likely open
             }
-            catch (OperationCanceledException)
-            {
-                return "open"; // Timeout = likely open
-            }
             catch (Exception)
             {
-                return "closed"; // Other error = likely closed
+                return "open"; 
             }
         }
 
         private IPAddress GetInterfaceIPAddress(string interfaceName)
         {
-            // Method implementation unchanged
             var networkInterface = System.Net.NetworkInformation.NetworkInterface.GetAllNetworkInterfaces()
                 .FirstOrDefault(ni => ni.Name.Equals(interfaceName, StringComparison.OrdinalIgnoreCase));
 
