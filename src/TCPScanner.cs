@@ -223,8 +223,6 @@ namespace IPKScanner
                 
                 if (isIPv6) // IPv6
                 {
-                    if (etherType != 0x86DD) return false; // Not an IPv6 packet
-                    
                     // Check if version is 6 (first 4 bits should be 6)
                     if ((packet[ipOffset] >> 4) != 6) return false;
                     
@@ -247,7 +245,6 @@ namespace IPKScanner
                 }
                 else // IPv4
                 {
-                    // Original IPv4 implementation
                     if (etherType != 0x0800) return false;
                     if ((packet[14] >> 4) != 4) return false;
                     
@@ -317,12 +314,26 @@ namespace IPKScanner
         private LibPcapLiveDevice GetCaptureDevice()
         {
             var devices = LibPcapLiveDeviceList.Instance;
+    
+            // Special handling for loopback
+            if (_interface.Equals("lo", StringComparison.OrdinalIgnoreCase))
+            {
+                // Look specifically for loopback device
+                foreach (var dev in devices)
+                {
+                    if (dev.Loopback)
+                        return dev;
+                }
+            }
+    
+            // Regular device lookup
             foreach (var dev in devices)
             {
                 if (dev.Name == _interface || dev.Description.Contains(_interface))
                     return dev;
             }
-            throw new ArgumentException($"Interface `{_interface}` not found");
+    
+            throw new ArgumentException($"Interface {_interface} not found");
         }
 
         private IPAddress GetInterfaceIPAddress(string interfaceName, bool useIPv6 = false)
