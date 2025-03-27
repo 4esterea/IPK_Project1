@@ -16,6 +16,12 @@ public partial class Program
 
         public CommandLineArguments Parse()
         {
+            if (_args.Length == 0)
+            {
+                _arguments.ShouldListInterfaces = true;
+                return _arguments;
+            }
+            
             for (_currentIndex = 0; _currentIndex < _args.Length; _currentIndex++)
             {
                 var arg = _args[_currentIndex];
