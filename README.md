@@ -178,7 +178,7 @@ To verify that the program correctly detects and reports invalid parameters, pro
 **Command**:
 
 ```
-./ipk-l4-scan -i
+./ipk-l4-scan --invalid-option
 ```
 **Output**:
 
