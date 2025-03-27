@@ -1,6 +1,6 @@
 ﻿ASM_NAME = "ipk-l4-scan"
 
-BUILD: CLEAN *.cs *.csproj
+BUILD: CLEAN *.csproj
 	dotnet publish -c Release -o .
 
 CLEAN:

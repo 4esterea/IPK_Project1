@@ -38,35 +38,34 @@ The `TCPScanner` class uses a combination of raw socket programming and packet c
       return "closed";
   if ((flags & (TCP_SYN | TCP_ACK)) == (TCP_SYN | TCP_ACK))
       return "open";
-
-
+  
 ### UDP Scanning Implementation Details
 
 #### ICMP Response Monitoring
 The scanner uses raw socket programming to detect closed ports by capturing ICMP "port unreachable" messages:
 
 ```csharp
-// Check for ICMP Port Unreachable
-if (bytesRead >= MIN_ICMP_PACKET_SIZE)
-{
-    int ipHeaderLength = (buffer[0] & 0x0F) * 4;
-    byte icmpType = buffer[ipHeaderLength];
-    byte icmpCode = buffer[ipHeaderLength + 1];
-
-    // ICMP Port Unreachable
-    if (icmpType == ICMP_TYPE_DEST_UNREACHABLE &&
-        icmpCode == ICMP_CODE_PORT_UNREACHABLE)
-    {
-        // Extract original packet info from ICMP payload
-        int originalHeaderStart = ipHeaderLength + ICMP_HEADER_SIZE;
-        // ...
-        // Verify this is the ICMP response to our probe
-        if (srcPort == localPort)
-        {
-            return "closed";
-        }
-    }
-}
+  // Check for ICMP Port Unreachable
+  if (bytesRead >= MIN_ICMP_PACKET_SIZE)
+  {
+      int ipHeaderLength = (buffer[0] & 0x0F) * 4;
+      byte icmpType = buffer[ipHeaderLength];
+      byte icmpCode = buffer[ipHeaderLength + 1];
+  
+      // ICMP Port Unreachable
+      if (icmpType == ICMP_TYPE_DEST_UNREACHABLE &&
+          icmpCode == ICMP_CODE_PORT_UNREACHABLE)
+      {
+          // Extract original packet info from ICMP payload
+          int originalHeaderStart = ipHeaderLength + ICMP_HEADER_SIZE;
+          // ...
+          // Verify this is the ICMP response to our probe
+          if (srcPort == localPort)
+          {
+              return "closed";
+          }
+      }
+  }
 ```
 ## Usage
 ```

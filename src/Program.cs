@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace IPKScanner
+namespace OMEGAL4Scanner
 {
-    public partial class Program
+    public class Program
     {
         public static async Task Main(string[] args)
         {
