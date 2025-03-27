@@ -9,4 +9,4 @@ CLEAN:
 	rm -rf bin obj $(ASM_NAME) $(ASM_NAME).pdb
 
 ZIP: CLEAN
-	zip -r $(shell basename $(shell pwd)).zip .
+	zip -r xzhdan00.zip . -x "*.git*" -x "*.idea*"
